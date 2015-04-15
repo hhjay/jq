@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>jq</title>
+	<script src="../../jquery/jquery.min.js"></script>
+</head>
+<body>
+<div id="a">
+	<div class="b c"></div>
+	<div class="b c"></div>
+	<div class="b c"></div>
+	<div class="b c"></div>
+</div>
+<script type="text/javascript">
+	function jq(cName,root,tag) {// className，id||body，标签
+		if (root) {// 返回root类型
+			root = typeof root=="string" ? document.getElementById(root) : root;
+		}else{
+			root = document.body;
+		}
+		tag = tag || "*";
+		var tags = root.getElementsByTagName(tag),arr = [];
+		for (var i = 0; i < tags.length; i++) {
+			for (var j = 0,k = tags[i].className.split(" "); j < k.length; j++) {
+				if (k[j]==cName) {
+					arr.push(tags[i]);
+					break;
+				}
+			}
+		}
+		return arr;
+	}
+	console.log(jq("b"));
+	// console.log($(".b"));
+</script>
+</body>
+</html>
