@@ -3,23 +3,23 @@
 <head>
 	<meta charset="utf-8" />
 	<title>jq</title>
-	<script src="../../jquery/jquery.min.js"></script>
 </head>
 <body>
+<div class="b"></div>
 <div id="a">
 	<div class="b c"></div>
 	<div class="b c"></div>
-	<div class="b c"></div>
-	<div class="b c"></div>
+	<div class="b"></div>
+	<p class="b c"></p>
 </div>
 <script type="text/javascript">
 	function jq(cName,root,tag) {// className，id||body，标签
-		if (root) {// 返回root类型
+		if (root) {// 返回id类型
 			root = typeof root=="string" ? document.getElementById(root) : root;
 		}else{
 			root = document.body;
 		}
-		tag = tag || "*";
+		tag = tag || "*";//标签
 		var tags = root.getElementsByTagName(tag),arr = [];
 		for (var i = 0; i < tags.length; i++) {
 			for (var j = 0,k = tags[i].className.split(" "); j < k.length; j++) {
@@ -31,8 +31,62 @@
 		}
 		return arr;
 	}
-	console.log(jq("b"));
-	// console.log($(".b"));
+	function jqt(node) {
+		if (node) {
+			var tag = node.split(" "),// 判断传进来的节点是不是有子节点
+				root,
+				arr = [];
+			if (tag.length==1) {// 只有一个className/id/tag
+				getClassName(tag);
+			}else{
+				for (var i = 0; i < tag.length; i++) {
+					getClassName(tag[i]);
+				}
+			}
+			
+			function getClassName(nodeStatu) {// 还得判断是不是有子级元素
+				var str = node.substr(0,1),// 获取第一个字母判断是否clas/id
+					root = document.body,
+					name = node.substr(1,node.length-1);
+
+				switch(str) {
+					case ".":
+						// class
+						getClass(name);
+						break;
+					case "#":
+						// id
+						node = document.getElementById(name);
+						arr.push(node);
+						break;
+					default:
+						// span
+						getClass(node);
+				}
+				function getClass(s) {
+					if (s) {
+						var root = document.body,
+							// s = s;
+							temp = root.getElementsByTagName(s);
+							console.log(temp);
+						for (var i = 0; i < temp.length; i++) {
+							for (var j = 0,k = temp[i].className.split(" "); j < k.length; j++) {
+								if (k[j]==s) {
+									arr.push(temp[i]);
+									break;
+								}
+							}
+						}
+					}
+				}
+
+			}
+		}
+		return arr;
+	}
+	// var a = jqt("#a");
+	console.log(document.body.getElementsByTagName("div"));
+	console.log(jqt(".b"));
 </script>
 </body>
 </html>
