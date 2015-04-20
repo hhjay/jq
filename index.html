@@ -39,7 +39,7 @@
 
 			// console.log(tag);
 			if (tag.length==1) {// 只有一个className/id/tag
-				arr =getClassName(tag);
+				arr = getClassName(tag);
 			}else{
 				for (var i = 0; i < tag.length; i++) {
 					console.log(tag[i]);
@@ -92,11 +92,18 @@
 		}
 		return arrTemp;
 	}
+	function getMoreClass(tag) {
+		var tags = tag,i=0;
+		do{
+
+		}while( i<tags.length )
+	}
 
 
 	// var a = jqt("#a");
 	console.log(document.body.getElementsByTagName("div"));
 	console.log(jqt("#a p"));
+	// 实现多次获取自己元素的
 </script>
 </body>
 </html>

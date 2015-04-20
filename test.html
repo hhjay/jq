@@ -28,29 +28,29 @@
 <button class="prev">prev</button>
 
 <script type="text/javascript">
-
-$().ready(function() {
-	var li = $(".a li"),len = li.length,now = -1;
-	var init = setInterval(function() {
+	var li = $(".a li"),len = li.length,now = -1,star,
+	init = function() {
 		now = now >= (len-1) ? 0:now+1;//当前li
 		show(now);
-	},1000);
+	}
+	function auto() { star = setInterval(init,1000); }
 	function show(now) {// show now class
 		li.removeClass("showa");
 		li.eq(now).addClass("showa");
 	}
 	$(".next").click(function() {// next li
-		clearInterval(init);
+		clearInterval(star);
 		now = now >= (len-1) ? 0:now+1;
 		show(now);
+		setTimeout(auto(),4000);// 之后没反应会自动
 	})
 	$(".prev").click(function() {// pre li
-		clearInterval(init);
+		clearInterval(star);
 		now = now <= 0 ? (len-1):now-1;
 		show(now);
+		setTimeout(auto(),4000);
 	})
-});
-
+	auto();
 </script>
 </body>
 </html>
