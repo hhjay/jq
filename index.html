@@ -10,7 +10,7 @@
 	<div class="b c"></div>
 	<div class="b c"></div>
 	<div class="b"></div>
-	<p class="b c"></p>
+	<p class="b c"><span>aaa</span></p>
 </div>
 <script type="text/javascript">
 	function jq(cName,root,tag) {// className，id||body，标签
@@ -37,15 +37,12 @@
 				root,
 				arr = [];
 
-			// console.log(tag);
 			if (tag.length==1) {// 只有一个className/id/tag
 				arr = getClassName(tag);
 			}else{
-				for (var i = 0; i < tag.length; i++) {
-					console.log(tag[i]);
-					arr = getClassName(tag[i]);
-					console.log(arr);
-				}
+				tag = judgeInput(tag);
+				console.log(tag);
+				getMoreClass(tag);
 			}
 		}
 		return arr;
@@ -74,6 +71,21 @@
 		}
 		return arrTemp;
 	}
+
+	function judgeInput(arr){// 返回一个单词或数组 并将其区分为class id span
+		var arrTemp = [];
+		for (var i = 0; i < arr.length; i++) {
+			var str = String(arr[i]),
+			temp = str.substr(0,1);
+			if (temp=="." || temp=="#") {
+				str = str.substr(1,arr[i].length-1);
+			}else{
+				str = str;
+			}
+			arrTemp.push(str);
+		}
+		return arrTemp;
+	}
 	function getClass(Name,root,tag) {// className domTree EG:span
 		if (root) {
 			root = typeof root=="string" ? document.getElementById(root) : root;
@@ -93,16 +105,25 @@
 		return arrTemp;
 	}
 	function getMoreClass(tag) {
-		var tags = tag,i=0;
+		var tags = tag,i=0,root;
+		console.log(tags[0]);
+		if (tags[0]) {
+			root = typeof tags[0]=="string" ? document.getElementById(tags[0]) : tags[0];
+		}else{
+			root = document.body;
+		}
+		var temp="";
 		do{
+			i++;
+			var tagTemp = tags[i] || "*";
+			temp = root.getElementsByTagName(tagTemp);
+		}while( i<(tags.length-1) );
+			console.log(temp);
 
-		}while( i<tags.length )
 	}
 
-
-	// var a = jqt("#a");
-	console.log(document.body.getElementsByTagName("div"));
-	console.log(jqt("#a p"));
+	console.log(document.getElementById("a").getElementsByTagName("p").getElementsByTagName("span"));
+	console.log(jqt("#a p span"));
 	// 实现多次获取自己元素的
 </script>
 </body>
