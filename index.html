@@ -5,14 +5,15 @@
 	<title>jq</title>
 </head>
 <body>
-<div class="b"></div>
+<!-- <div class="b"></div> -->
 <div id="a">
 	<div class="b c"></div>
 	<div class="b c"></div>
 	<div class="b"></div>
-	<p class="b c"><span>aaa</span></p>
+	<p class="b c"><span class="d"><div>hhhh</div></span></p>
 </div>
 <script type="text/javascript">
+	//<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js">
 	function jq(cName,root,tag) {// className，id||body，标签
 		if (root) {// 返回id类型
 			root = typeof root=="string" ? document.getElementById(root) : root;
@@ -41,7 +42,6 @@
 				arr = getClassName(tag);
 			}else{
 				tag = judgeInput(tag);
-				console.log(tag);
 				getMoreClass(tag);
 			}
 		}
@@ -104,26 +104,29 @@
 		}
 		return arrTemp;
 	}
-	function getMoreClass(tag) {
+	function getMoreClass(tag) {// i>=2
 		var tags = tag,i=0,root;
-		console.log(tags[0]);
 		if (tags[0]) {
 			root = typeof tags[0]=="string" ? document.getElementById(tags[0]) : tags[0];
 		}else{
 			root = document.body;
 		}
 		var temp="";
-		do{
-			i++;
-			var tagTemp = tags[i] || "*";
-			temp = root.getElementsByTagName(tagTemp);
-		}while( i<(tags.length-1) );
-			console.log(temp);
-
+		tags[1] = tags[1] || "*";//第二个tag之后遍历子节点
+		temp = root.getElementsByTagName(tags[1]);
+		for (var i = 0; i < temp.length; i++) {
+			for (var j = 0,k=temp[i].childNodes; j < k.length; j++) {
+				alert(k[j].nodeName);	
+				if (k[j].className==tags[2]) {
+					alert(k[j]);
+				}
+			}
+		}
 	}
-
-	console.log(document.getElementById("a").getElementsByTagName("p").getElementsByTagName("span"));// 多次出错getElementBytagName
-	console.log(jqt("#a p span"));
+	// console.log($("#a .b span").html());// 多次出错getElementBytagName
+	// var str = document.getElementById("a").getElementsByTagName("p");
+	// console.log(str);
+	console.log(jqt("#a p span div"));
 	// 实现多次获取自己元素的
 </script>
 </body>
