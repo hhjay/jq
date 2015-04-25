@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>冒泡、捕获</title>
+	<style type="text/css">
+	#a{background: red;}
+	#a p{background: blue;}
+	#a h1{background: green;}
+	</style>
+</head>
+<body>
+<div id="a">
+	<p>pppp</p>
+	<h1>bbb</h1>
+</div>
+
+------------------------------------  |
+| #a                               |  |
+|   ---------------  ------------  |  |
+|   |     p        |     h1     |  |  |   捕获
+|   ---------------  ------------  |  |
+|                                  |  |
+------------------------------------  V
+
+------------------------------------  ^
+| #a                               |  |
+|   ---------------  ------------  |  |
+|   |     p        |     h1     |  |  |   冒泡
+|   ---------------  ------------  |  |
+|                                  |  |
+------------------------------------  |
+
+<script type="text/javascript">
+	var a = document.getElementById('a'),
+		p = a.getElementsByTagName('p'),
+		h1 = a.getElementsByTagName("h1");
+	alert(!!document.all)
+//onclick
+	// a.onclick = function() {
+	// 	alert("aaaa");
+	// }
+	// p[0].onclick = function() {
+	// 	alert("pppp");
+	// }
+	// h1[0].onclick = function() {
+	// 	alert("h1hhhh");
+	// }
+	// a.onclick = function() {
+	// 	alert("bbbb");
+	// }
+
+//attachEvent 只有ie响应
+	// a.attachEvent("onclick",function() {
+	// 	alert("aaaa");
+	// });
+	// p[0].attachEvent("onclick",function() {
+	// 	alert("ppp");
+	// });
+	// h1[0].attachEvent("onclick",function() {
+	// 	alert("hhhhh");
+	// });
+
+//attEventListener 只有ie不响应
+	// a.addEventListener("click",function() { 
+	// 	alert("aaaaa"); 
+	// },true);
+	// p[0].addEventListener("click",function() {
+	// 	alert("ppp");
+	// },true);// true情况下是事件捕获，所以事件a先触发，false(冒泡)情况下p先触发
+
+//事件监听封装
+	// function eventListener(node,eType,fn) {// 都是事件冒泡
+	// 	if (document.all) { //ie
+	// 		node.attachEvent("on"+eType,fn);
+	// 	}else{
+	// 		node.addEventListener(eType,fn,false);
+	// 	}
+	// }
+	// eventListener(a,"click",function() {
+	// 	alert("aaaa");
+	// });
+	// eventListener(p[0],"click",function(e) {
+	// 	alert("ppp");
+	// 	stopPro(e);
+	// });
+	
+//阻止冒泡封装
+	// function stopPro(e) {//e指事件发生的event
+	// 	e = window.e || e;
+	// 	if (document.all) {//ie
+	// 		e.cancelBubble = true;
+	// 	}else{
+	// 		e.stopPropagation();
+	// 	}
+	// }
+
+	// 在ie下只有aa,  事件冒泡阻止了
+	// 在ff/chrome/opera/safari pp-->aa 事件冒泡，先触发p然后a。从下到上
+</script>
+</body>
+</html>
