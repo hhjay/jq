@@ -108,23 +108,34 @@
 		if (tags[0]) {
 			root = tags[0].substr(0,1)=="#" ? document.getElementById(tags[0].substr(1,tags[0].length-1)) : document.body;
 		}
-		var temp = "",arrTemp = [];
-		if (tags[1].substr(0,1)==".") {
-			temp = root.getElementsByTagName("*");
-			for (var i = 0; i < temp.length; i++) {
-				for (var j = 0,k=temp[i]; j < k.length; j++) {
-					if (k[j]==tags[i].substr(1,tags[1].length-1)) {
-						arrTemp.push(k[j]);
-						break;
+		function returnArr(tags,root) {// 通过进去的标签数组返回一个数组
+			var arrTemp = [],
+				temp = "";
+			for (var x = 1; x < tags.length; x++) {
+				console.log(tags[x]);
+				if (tags[x].substr(0,1)==".") {
+					temp = root.getElementsByTagName("*");
+					for (var i = 0; i < temp.length; i++) {
+						for (var j = 0,k=temp[i]; j < k.length; j++) {
+							if (k[j]==tags[x].substr(1,tags[x].length-1)) {
+								arrTemp.push(k[j]);
+								break;
+							}
+						}
 					}
+				}else{
+					temp = root.getElementsByTagName(tags[x]);
+					for (var i = 0; i < temp.length; i++) {
+						arrTemp.push(temp[i]);
+						console.log(temp[i]);
+					}
+					console.log(arrTemp);
 				}
 			}
-		}else{
-			temp = root.getElementsByTagName(tags[1]);
-			for (var i = 0; i < temp.length; i++) {
-				arrTemp.push(temp[i]);
-			}
+			return arrTemp;
 		}
+		returnArr(tags,root);
+		// console.log();
 		// var temp="";
 		// tags[1] = tags[1] || "*";//第二个tag之后遍历子节点
 		// temp = root.getElementsByTagName(tags[1]);
