@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8" />
 	<title>jq</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 </head>
 <body>
 <div id="a">
@@ -46,7 +47,6 @@
 		}
 		return arr;
 	}
-
 	function getClassName(s) {// 还得判断是不是有子级元素
 		s = String(s);
 		var str = s.substr(0,1),// 获取第一个字母判断是否clas/id
@@ -70,7 +70,6 @@
 		}
 		return arrTemp;
 	}
-
 	function judgeInput(arr){// 返回一个单词或数组 并将其区分为class id span
 		var arrTemp = [];
 		for (var i = 0; i < arr.length; i++) {
@@ -135,24 +134,10 @@
 			return arrTemp;
 		}
 		returnArr(tags,root);
-		// console.log();
-		// var temp="";
-		// tags[1] = tags[1] || "*";//第二个tag之后遍历子节点
-		// temp = root.getElementsByTagName(tags[1]);
-		// for (var i = 0; i < temp.length; i++) {
-		// 	for (var j = 0,k=temp[i].childNodes; j < k.length; j++) {
-		// 		alert(k[j].nodeName);	
-		// 		if (k[j].className==tags[2]) {
-		// 			alert(k[j]);
-		// 		}
-		// 	}
-		// }
 	}
 	// console.log($("#a .b span").html());// 多次出错getElementBytagName
 	// var str = document.getElementById("a").getElementsByTagName("p");
 	// console.log(str);
-	console.log(jqt("#a p span div"));
-	// 实现多次获取自己元素的
 </script>
 </body>
 </html>
