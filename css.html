@@ -9,14 +9,27 @@
 	(function() {
 		var jq = function(el) {
 			return new jq.prototype.init(el);
-		}
+		};
 
 		jq.prototype = {
-			css: function(obj,) {
+			element: [],
+			init: function(el) {
+				if (!el) {
+					return this;
+				}else{
+					console.log("nonw");
+				}
+			},
+			css: function(obj) {
+				var el = this.element;
+				var len = Object.getOwnPropertyNames(obj).length;
 
+				console.log(len);
 			}
 		}
-	})
+		jq.prototype.init.prototype = jq.prototype;
+	})();
+	console.log(jq().css());
 </script>
 </body>
 </html>
