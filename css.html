@@ -5,6 +5,7 @@
 	<title>css</title>
 </head>
 <body>
+<div id="b" class="a">aaaa</div>
 <script type="text/javascript">
 	(function() {
 		var jq = function(el) {
@@ -16,20 +17,44 @@
 			init: function(el) {
 				if (!el) {
 					return this;
-				}else{
-					console.log("nonw");
+				}else{// el存在
+					var flag = el[0];
+					if (flag==="#") {
+						el = el.substr(1);
+						el = document.getElementById(el);
+						console.log(el);
+						this.element.push(el);
+					}else if(flag==="."){
+						var el_name = el.substr(1);
+						el = document.body.getElementsByTagName('*');
+						for (var i = 0, len = el.length; i < len; i++) {
+							for (var j = 0, k = el[i].className.split(" "); j < k.length; j++) {
+								if (k[j]==el_name) {
+									this.element.push(k[j]);
+									break;
+								}		
+							};
+						};
+					}else{
+						el = document.getElementsByTagName(el);
+						for (var i = 0, len = el.length; i < len; i++) {
+							this.element.push(el[i]);
+						};
+					}
 				}
+				return this;
 			},
-			css: function(obj) {
-				var el = this.element;
-				var len = Object.getOwnPropertyNames(obj).length;
+			css: function(style) {
+				// var el = this.element;
+				// var len = Object.getOwnPropertyNames(obj).length;
 
-				console.log(len);
+				console.log(style+":"+attr);
 			}
-		}
+		};
 		jq.prototype.init.prototype = jq.prototype;
-	})();
-	console.log(jq().css());
+		// window.$$ = window.jq = jq;
+	}());
+	// console.log(jq());
 </script>
 </body>
 </html>
