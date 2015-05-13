@@ -15,6 +15,7 @@
 		jq.prototype = {
 			element: [],
 			init: function(el) {
+				console.log(this.element);
 				if (!el) {
 					return this;
 				}else{// el存在
@@ -45,16 +46,14 @@
 				return this;
 			},
 			css: function(style) {
-				// var el = this.element;
-				// var len = Object.getOwnPropertyNames(obj).length;
-
-				console.log(style+":"+attr);
+				var el = this.element,
+					len = Object.getOwnPropertyNames(el).length;
+				console.log(style+" "+len);
 			}
 		};
 		jq.prototype.init.prototype = jq.prototype;
-		// window.$$ = window.jq = jq;
+		window.$$ = window.jq = jq;
 	}());
-	// console.log(jq());
 </script>
 </body>
 </html>
