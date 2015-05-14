@@ -3,19 +3,26 @@
 <head>
 	<meta charset="utf-8" />
 	<title>css</title>
+	<style type="text/css">
+	.a{color:red;}
+	.a{color: blue;}
+	</style>
 </head>
 <body>
 <div id="b" class="a">aaaa</div>
 <script type="text/javascript">
 	(function() {
 		var jq = function(el) {
-			return new jq.prototype.init(el);
+			return new jq.prototype.init(el);// 新构造函数
 		};
 
 		jq.prototype = {
 			element: [],
 			init: function(el) {
-				console.log(this.element);
+			/*
+			jq("#b || .a || div");//课返回当前节点
+			jq.css
+			*/
 				if (!el) {
 					return this;
 				}else{// el存在
@@ -23,7 +30,6 @@
 					if (flag==="#") {
 						el = el.substr(1);
 						el = document.getElementById(el);
-						console.log(el);
 						this.element.push(el);
 					}else if(flag==="."){
 						var el_name = el.substr(1);
@@ -31,7 +37,7 @@
 						for (var i = 0, len = el.length; i < len; i++) {
 							for (var j = 0, k = el[i].className.split(" "); j < k.length; j++) {
 								if (k[j]==el_name) {
-									this.element.push(k[j]);
+									this.element.push(el[i]);
 									break;
 								}		
 							};
@@ -45,15 +51,61 @@
 				}
 				return this;
 			},
-			css: function(style) {
-				var el = this.element,
-					len = Object.getOwnPropertyNames(el).length;
-				console.log(style+" "+len);
+			css: function(attr,style) {// 属性 样式
+			/* 
+			eg 
+				1、css("color") 可以提取出当前的color样式
+				2、css("color","red") 将color变成red
+				3、css({
+						"color":"red",
+						"background":"blue"
+					})
+			*/
+				var el = this.element;
+				if (style) {// style存在则说明是 p2
+					for (var i = 0, len = el.length; i < len; i++) {
+						el[i].style[attr] = style;
+					};
+				}else{
+					if (typeof attr==="string") {
+						for (var i = 0, len = el.length; i < len; i++) {
+							console.log(window.getComputedStyle(el[i]).getPropertyValue(attr));
+							return this.attr();
+						};
+					}
+				}
+			},
+			attr: function(attr_name,style) {
+			/*
+			attr_name：属性名
+			style：属性
+			*/
+				var el = this.element;
+				if (!style) {
+					var len = el.length - 1,return_attr;
+					// 就近原则 获取最后一个即可
+					// 匹配ie用currentStyle
+					if (el[len].currentStyle) {
+						return_attr = el[len].currentStyle[attr_name];//.getAttribute[attr_name];
+					}else{
+						return_attr = window.getComputedStyle(el[len],null).getPropertyValue(attr_name)
+					};
+					return return_attr;
+				}else{
+					this.css(attr_name,style);
+				}
 			}
 		};
 		jq.prototype.init.prototype = jq.prototype;
 		window.$$ = window.jq = jq;
 	}());
+	
+	var test = jq(".a");
+	// alert(test);
+	// console.log(test);
+	// var a = test.attr("color");
+	// alert(a);
+	// test.css("background","red");
 </script>
 </body>
 </html>
