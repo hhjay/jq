@@ -5,5 +5,5 @@
 
 |功能|进度|完成|
 |---------
-|jq()判断进去的类型#==id,class==.|yes|
-|css/attr获取或者修改当前节点的css|yes|
+|jq()判断进去的类型#==id,class==.	|完成|	yes
+|css/attr获取或者修改当前节点的css	|完成|	yes
