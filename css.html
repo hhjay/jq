@@ -7,6 +7,7 @@
 	.a{color:red;}
 	.a{color: blue;}
 	</style>
+	<link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
 <div id="b" class="a">aaaa</div>
@@ -69,7 +70,7 @@
 				}else{
 					if (typeof attr==="string") {
 						for (var i = 0, len = el.length; i < len; i++) {
-							console.log(window.getComputedStyle(el[i]).getPropertyValue(attr));
+							// console.log(window.getComputedStyle(el[i]).getPropertyValue(attr));
 							return this.attr();
 						};
 					}
@@ -80,14 +81,21 @@
 			attr_name：属性名
 			style：属性
 			*/
-				var el = this.element;
+				var el = this.element,attr_name = attr_name,style = style;
 				if (!style) {
 					var len = el.length - 1,return_attr;
-					// 就近原则 获取最后一个即可
-					// 匹配ie用currentStyle
+					/*
+					就近原则 获取最后一个即可
+					匹配ie用currentStyle
+					*/
 					if (el[len].currentStyle) {
-						return_attr = el[len].currentStyle[attr_name];//.getAttribute[attr_name];
+						return_attr = el[len].currentStyle.getAttribute(attr_name);
+						// return_attr = el[len].currentStyle[attr_name];
+						// 以上两种方法都可以
 					}else{
+						/*
+						getComputedStyle(this,伪类)与style的区别
+						*/
 						return_attr = window.getComputedStyle(el[len],null).getPropertyValue(attr_name)
 					};
 					return return_attr;
@@ -100,9 +108,9 @@
 		window.$$ = window.jq = jq;
 	}());
 	
-	var test = jq(".a");
+	var test = jq("#b");
 	// console.log(test);
-	// var a = test.attr("color");
+	alert(test.attr("color"));
 	// test.css("background","red");
 </script>
 </body>
