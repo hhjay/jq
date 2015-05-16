@@ -62,16 +62,21 @@
 						"background":"blue"
 					})
 			*/
-				var el = this.element;
+				var el = this.element,attr = attr,style = style;
 				if (style) {// style存在则说明是 p2
 					for (var i = 0, len = el.length; i < len; i++) {
 						el[i].style[attr] = style;
 					};
 				}else{
-					if (typeof attr==="string") {
+					if (typeof attr=== "string") {
 						for (var i = 0, len = el.length; i < len; i++) {
-							// console.log(window.getComputedStyle(el[i]).getPropertyValue(attr));
 							return this.attr();
+						};
+					}else if(typeof attr === "object"){
+						for (key in attr) {// for in用在object变成array有效
+							for (var i = 0, len = el.length; i < len; i++) {
+								el[i].style[key] = attr[key];
+							};
 						};
 					}
 				}
@@ -110,7 +115,10 @@
 	
 	var test = jq("#b");
 	// console.log(test);
-	alert(test.attr("color"));
+	test.css({
+		"color":"red",
+		"background":"blue"
+	});
 	// test.css("background","red");
 </script>
 </body>
