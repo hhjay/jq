@@ -6,11 +6,14 @@
 	<style type="text/css">
 	.a{color:red;}
 	.a{color: blue;}
+	.c{width: 500px;height: 500px;background: #ccc;}
 	</style>
 	<link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-<div id="b" class="a">aaaa</div>
+<div class="c">
+	<div id="b" class="a">aaaa</div>
+</div>
 <script type="text/javascript">
 	(function() {
 		var jq = function(el) {
@@ -78,6 +81,8 @@
 								el[i].style[key] = attr[key];
 							};
 						};
+					}else{
+						alert("请检查你的输入是否有误");
 					}
 				}
 			},
@@ -107,6 +112,36 @@
 				}else{
 					this.css(attr_name,style);
 				}
+			},
+			show: function(time) {
+				var el = this.element;
+				if (time) {
+
+				};
+			},
+			hide: function(time) {
+			/*
+			hide(3000) 渐渐3000ms后 完全消失
+			*/
+				var el = this.element,len = el.length-1;
+				if (time) {
+					// var speed = 100 / time,opacity = time;
+					// for (var i = time; i > 0; i = i - speed) {
+					// 	console.log(i);
+					// 	this.css("opacity",i);
+					// };
+					var speed = time/10,now_op = parseInt(time);
+					var fnTime = setInterval(function(){
+						now_op = now_op - speed;
+						if (now_op < 0) {
+							clearInterval(fnTime);
+						}else{
+							console.log(now_op);
+							el[0].style.opacity = now_op;
+						}
+						// el[0].css("opacity",now_op);
+					},speed);
+				};
 			}
 		};
 		jq.prototype.init.prototype = jq.prototype;
@@ -119,6 +154,7 @@
 		"color":"red",
 		"background":"blue"
 	});
+	test.hide(3000);
 	// test.css("background","red");
 </script>
 </body>
