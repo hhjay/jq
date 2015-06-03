@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>上传</title>
+</head>
+<body>
+<form name="upload-form">
+	<input type="file" name="upload" />
+</form>
+<script type="text/javascript">
+		var elts = document.getElementsByTagName('input'),
+			input = elts[0];
+
+		input.addEventListener("change", function() {
+
+			var file = this.files[0],
+				url = input.getAttribute("data-uploadto");
+
+			if ( !file ) return;
+
+			console.log(file)
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if ( xhr.readyState==4 && xhr.status==200 ) {
+					console.log(xhr.responseText);
+				};
+			}
+			xhr.open("POST", "./upload_deal.php",true);
+			xhr.send("upload="+file);
+		},false);
+</script>
+</body>
+</html>
